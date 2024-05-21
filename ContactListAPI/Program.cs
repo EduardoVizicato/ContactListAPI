@@ -1,4 +1,6 @@
+using ContactList.Domain.Data.Repositories.Interfaces;
 using ContactList.Infrastructure.Data;
+using ContactList.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ApplicationDataContext>(options =>
 options.UseSqlite(builder.Configuration.GetConnectionString("DefaultContext")));
+
+builder.Services.AddScoped<IContactRepository, ContactRepository > ();
 
 var app = builder.Build();
 
