@@ -25,7 +25,7 @@ namespace ContactListAPI.Controllers
 
         [HttpGet("{id}")]
 
-        public async Task<IActionResult> GetById(Guid id)
+        public async Task<IActionResult> GetById(int id)
         {
             var data = await _repository.GetById(id);
 
@@ -49,7 +49,7 @@ namespace ContactListAPI.Controllers
 
         [HttpDelete("{id}")]
 
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(int id)
         {
             var deleted = await _repository.Delete(id);
             if(deleted == null) 
@@ -67,7 +67,7 @@ namespace ContactListAPI.Controllers
 
         [HttpPut("{id}")]
 
-        public async Task<IActionResult> Update(Guid id, [FromBody] Contact request)
+        public async Task<IActionResult> Update(int id, [FromBody] Contact request)
         {
             var updated = await _repository.Update(id, request);
 

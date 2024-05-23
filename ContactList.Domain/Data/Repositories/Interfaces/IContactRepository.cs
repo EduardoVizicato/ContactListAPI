@@ -10,9 +10,9 @@ namespace ContactList.Domain.Data.Repositories.Interfaces
     public interface IContactRepository
     {
         Task<List<Contact>> GetAll();
-        Task<Contact> GetById(Guid id);
-        Task<bool?> Update(Guid id, Contact contact);
-        Task<bool?> Delete(Guid id);
-        Task<Guid> Add(Contact contact);
+        Task<Contact> GetById(int id);
+        Task<bool?> Update(int id, Contact contact);
+        Task<bool?> Delete(int id);
+        Task<Contact> Add(Contact contact);
     }
 }
