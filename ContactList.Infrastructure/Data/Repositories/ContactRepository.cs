@@ -24,7 +24,7 @@ namespace ContactList.Infrastructure.Data.Repositories
             return contact;
         }
 
-        public async Task<bool?> Delete(int id)
+        public async Task<bool?> Delete(Guid id)
         {
             var contactToDelete = await GetById(id);
             if (contactToDelete == null) {
@@ -40,12 +40,12 @@ namespace ContactList.Infrastructure.Data.Repositories
             return await _context.Contacts.ToListAsync();
         }
 
-        public async Task<Contact> GetById(int id)
+        public async Task<Contact> GetById(Guid id)
         {
             return await _context.Contacts.Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<bool?> Update(int id, Contact contact)
+        public async Task<bool?> Update(Guid id, Contact contact)
         {
             var contactToUpdate = await GetById(contact.Id);
 

@@ -9,7 +9,7 @@ namespace ContactList.Domain.Data.Models
 {
     public class Contact
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string? Name { get; set; }
         public double Mobile {get; set; } 
         public bool IsActive { get; set; } 
