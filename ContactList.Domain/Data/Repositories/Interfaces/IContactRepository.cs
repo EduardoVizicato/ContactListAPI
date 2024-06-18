@@ -12,7 +12,7 @@ namespace ContactList.Domain.Data.Repositories.Interfaces
         Task<List<Contact>> GetAll();
         Task<Contact> GetById(Guid id);
         Task<bool?> Update(Guid id, Contact contact);
-        Task<bool?> Delete(Guid id);
+        Task<bool?> Delete(Guid id, Contact contact);
         Task<Contact> Add(Contact contact);
     }
 }

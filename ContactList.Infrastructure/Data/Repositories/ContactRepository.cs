@@ -24,20 +24,17 @@ namespace ContactList.Infrastructure.Data.Repositories
             return contact;
         }
 
-        public async Task<bool?> Delete(Guid id)
+        public async Task<bool?> Delete(Guid id, Contact contact)
         {
-            var contactToDelete = await GetById(id);
-            if (contactToDelete == null) {
-                return null;
-            }
-
-            _context.Contacts.Remove(contactToDelete);
+            var contactToUpdate = await _context.Contacts.FirstOrDefaultAsync(x => x.Id == id);
+            contactToUpdate.IsActive = false;
             return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<List<Contact>> GetAll()
         {
-            return await _context.Contacts.ToListAsync();
+            var active =await _context.Contacts.Where(x=> x.IsActive).ToListAsync();
+            return active;
         }
 
         public async Task<Contact> GetById(Guid id)

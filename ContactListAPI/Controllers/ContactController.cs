@@ -49,19 +49,17 @@ namespace ContactListAPI.Controllers
 
         [HttpDelete("{id}")]
 
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id, Contact contact)
         {
-            var deleted = await _repository.Delete(id);
-            if(deleted == null) 
+            var deleted = await _repository.Delete(id, contact);
+            if (deleted == null)
             {
                 return NotFound();
             }
-
-            if(!deleted.Value)
+            if (!deleted.Value)
             {
                 return BadRequest();
             }
-
             return Ok();
         }
 
