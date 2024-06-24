@@ -1,4 +1,5 @@
 ﻿using ContactList.Domain.Data.Models;
+using ContactList.Domain.Data.Models.Request;
 using ContactList.Domain.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,14 +18,28 @@ namespace ContactList.Infrastructure.Data.Repositories
             _context = context;
         }
 
-        public async Task<Contact> Add(Contact contact)
+        public async Task<ContactRequest> Add(ContactRequest contactRequest)
         {
+            var contact = new Contact()
+            {
+                Name = contactRequest.Name,
+                Mobile = contactRequest.Mobile,
+                IsActive = contactRequest.IsActive,
+            };
             await _context.AddAsync(contact);
             await _context.SaveChangesAsync();
-            return contact;
+
+            var addedContactRequest = new ContactRequest()
+            {
+                Name = contact.Name,
+                Mobile = contact.Mobile,
+                IsActive = contact.IsActive,
+            };
+
+            return addedContactRequest;
         }
 
-        public async Task<bool?> Delete(Guid id, Contact contact)
+        public async Task<bool?> Delete(Guid id, ContactRequest contact)
         {
             var contactToUpdate = await _context.Contacts.FirstOrDefaultAsync(x => x.Id == id);
             contactToUpdate.IsActive = false;
@@ -33,8 +48,8 @@ namespace ContactList.Infrastructure.Data.Repositories
 
         public async Task<List<Contact>> GetAll()
         {
-            var active =await _context.Contacts.Where(x=> x.IsActive).ToListAsync();
-            return active;
+            var active = await _context.Contacts.Where(c => c.IsActive).ToListAsync();
+            return  active;
         }
 
         public async Task<Contact> GetById(Guid id)
@@ -42,9 +57,9 @@ namespace ContactList.Infrastructure.Data.Repositories
             return await _context.Contacts.Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<bool?> Update(Guid id, Contact contact)
+        public async Task<bool?> Update(Guid id, ContactRequest contact)
         {
-            var contactToUpdate = await GetById(contact.Id);
+            var contactToUpdate = await _context.Contacts.FirstOrDefaultAsync(x => x.Id == id);
 
             if (contactToUpdate == null) {
                return null;
@@ -58,5 +73,7 @@ namespace ContactList.Infrastructure.Data.Repositories
             return await _context.SaveChangesAsync() > 0;
 
         }
+
+
     }
 }

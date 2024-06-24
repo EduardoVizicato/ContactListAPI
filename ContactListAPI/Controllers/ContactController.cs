@@ -1,4 +1,5 @@
 ﻿using ContactList.Domain.Data.Models;
+using ContactList.Domain.Data.Models.Request;
 using ContactList.Domain.Data.Repositories.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -40,7 +41,7 @@ namespace ContactListAPI.Controllers
 
         [HttpPost]
 
-        public async Task<IActionResult> Add([FromBody] Contact request)
+        public async Task<IActionResult> Add([FromBody] ContactRequest request)
         {
             var contactId = await _repository.Add(request);
 
@@ -49,7 +50,7 @@ namespace ContactListAPI.Controllers
 
         [HttpDelete("{id}")]
 
-        public async Task<IActionResult> Delete(Guid id, Contact contact)
+        public async Task<IActionResult> Delete(Guid id, ContactRequest contact)
         {
             var deleted = await _repository.Delete(id, contact);
             if (deleted == null)
@@ -65,7 +66,7 @@ namespace ContactListAPI.Controllers
 
         [HttpPut("{id}")]
 
-        public async Task<IActionResult> Update(Guid id, [FromBody] Contact request)
+        public async Task<IActionResult> Update(Guid id, [FromBody] ContactRequest request)
         {
             var updated = await _repository.Update(id, request);
 
